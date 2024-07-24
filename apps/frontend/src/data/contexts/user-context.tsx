@@ -8,8 +8,8 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export interface UserContextProps {
 	loading: boolean;
 	user: User | null;
-	login: (user: User) => Promise<void>;
-	logout: () => void;
+	signIn: (user: User) => Promise<void>;
+	signOut: () => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as any);
@@ -34,12 +34,12 @@ export function UserProvider({ children }: any) {
 		[get]
 	);
 
-	async function login(user: User) {
+	async function signIn(user: User) {
 		setUser(user);
 		set("user", user);
 	}
 
-	function logout() {
+	function signOut() {
 		router.push("/");
 		setUser(null);
 		set("user", null);
@@ -52,8 +52,8 @@ export function UserProvider({ children }: any) {
 			value={{
 				loading,
 				user,
-				login,
-				logout
+				signIn,
+				signOut
 			}}
 		>
 			{children}
